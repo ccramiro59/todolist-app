@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import InputEditItemRefContext from '../context/InputEditItemContext';
+import TodoItemContext from '../context/TodoItemContext';
 
 const ItemInfo = (props) => {
   const { model } = props;
   const { inputRef, isHovering, saveItem, title, setTitle }
-    = useContext(InputEditItemRefContext);
+    = useContext(TodoItemContext);
 
   const onInputChange = (evt) => setTitle(evt.target.value);
 

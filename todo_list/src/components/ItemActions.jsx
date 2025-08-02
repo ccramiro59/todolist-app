@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { MdEdit, MdDeleteOutline } from 'react-icons/md';
-import InputEditItemRefContext from '../context/InputEditItemContext';
+import TodoItemContext from '../context/TodoItemContext';
 
 const ItemActions = (props) => {
   const { model } = props;
-  const { setHovering, saveItem, deleteItem, title } = useContext(InputEditItemRefContext);
+  const { setHovering, saveItem, deleteItem, title } = useContext(TodoItemContext);
 
   const mouseEnter = () => setHovering(true);
 

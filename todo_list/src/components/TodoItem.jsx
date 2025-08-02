@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useContext } from 'react';
 import ItemInfo from './ItemInfo';
 import ItemActions from './ItemActions';
 import TodoListContext from '../context/TodoListContext';
-import InputEditItemRefContext from '../context/InputEditItemContext';
+import TodoItemContext from '../context/TodoItemContext';
 
 const TodoItem = ({ model }) => {
   const inputRef = useRef(null);
@@ -30,7 +30,7 @@ const TodoItem = ({ model }) => {
   };
 
   return (
-    <InputEditItemRefContext.Provider value={{
+    <TodoItemContext.Provider value={{
       inputRef,
       isHovering,
       title,
@@ -44,7 +44,7 @@ const TodoItem = ({ model }) => {
         <ItemInfo model={model} />
         <ItemActions model={model} />
       </li>
-    </InputEditItemRefContext.Provider>
+    </TodoItemContext.Provider>
   );
 };
 
