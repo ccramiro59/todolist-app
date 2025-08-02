@@ -31,7 +31,10 @@ const TodoItem = ({ model }) => {
     );
   };
 
-  const bulletClss = classNames('', { 'text-purple-400': !model.completed });
+  const bulletClss = classNames('', {
+    'text-purple-400': !model.completed,
+    'text-green-600': model.completed
+  });
 
   return (
     <TodoItemContext.Provider value={{
@@ -46,7 +49,8 @@ const TodoItem = ({ model }) => {
       setEditMode
     }}>
 
-      <li className='flex space-x-4 items-center p-2 cursor-pointer rounded-lg hover:bg-purple-50'>
+      <li className='flex space-x-4 items-center p-2 cursor-pointer rounded-lg hover:bg-purple-50 first:mt-4 select-none'
+        onClick={() => saveItem({ ...model, completed: true })}>
         <span className={bulletClss}>&bull;</span>
         <ItemInfo model={model} />
         <ItemActions model={model} />

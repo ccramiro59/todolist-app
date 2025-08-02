@@ -25,7 +25,8 @@ const ItemActions = (props) => {
     <button type='button'
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
-      onClick={() => {
+      onClick={(evt) => {
+        evt.stopPropagation();
         const _title = title.trim() || model.title;
         saveItem({ ...model, title: _title });
         setTitle(_title);
@@ -34,7 +35,10 @@ const ItemActions = (props) => {
       className={editBtnStyle}>
       <MdEdit /></button>
     <button type='button'
-      onClick={() => { deleteItem(model.id) }}
+      onClick={(evt) => {
+        evt.stopPropagation();
+        deleteItem(model.id);
+      }}
       className='p-2 text-sm cursor-pointer hover:text-purple-600'>
       <MdDeleteOutline /></button>
   </div>;

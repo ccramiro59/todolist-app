@@ -13,7 +13,8 @@ function App() {
     <TodoListContext.Provider value={todoListContext}>
       <div className='max-w-lg mx-auto p-[1rem]'>
         <AddItemForm />
-        <ItemList todoList={todoList} />
+        <ItemList sectionTitle={'Active'} todoList={todoList} completedOnly={false} />
+        <ItemList sectionTitle={'Completed'} todoList={todoList} completedOnly={true} />
       </div>
     </TodoListContext.Provider>
   );
