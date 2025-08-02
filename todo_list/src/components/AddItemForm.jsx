@@ -15,7 +15,7 @@ const AddItemForm = () => {
     const title = todoValue.trim();
     const id = uuidv4();
 
-    if (title) setTodoList((list) => [{ id, title, editMode: false }, ...list]);
+    if (title) setTodoList((list) => [{ id, title, completed: false }, ...list]);
 
     setTodoValue('');
   };

@@ -1,29 +1,35 @@
-import { useContext } from "react";
+import classNames from "classnames";
+import { useContext, useEffect } from "react";
 import TodoItemContext from '../context/TodoItemContext';
 
 const ItemInfo = (props) => {
   const { model } = props;
-  const { inputRef, isHovering, saveItem, title, setTitle }
+  const { inputRef, title, editMode, isHovering, saveItem, setTitle, setEditMode }
     = useContext(TodoItemContext);
 
   const onInputChange = (evt) => setTitle(evt.target.value);
 
   const onInputBlur = () => {
-    if (!isHovering) {
-      saveItem({ ...model, title: title.trim(), editMode: false });
+    const _title = title.trim() || model.title;
+
+    if (!isHovering && _title) {
+      saveItem({ ...model, title: _title });
+      setEditMode(false);
     }
   };
 
-  return <div className='grow flex items-center wrap-anywhere'>
-    {model.editMode
+  const clss = classNames('w-full focus:outline-none border-purple-600', { 'border-b-1': editMode });
+
+  return <div className='flex grow'>
+    {editMode
       ? <input type='text'
         ref={inputRef}
         onChange={onInputChange}
         onBlur={onInputBlur}
-        className='w-full focus:outline-none'
+        className={clss}
         value={title}
         autoComplete={false}></input>
-      : <span className='mr-2'>{model.title}</span>}
+      : <span>{model.title}</span>}
   </div>;
 };
 

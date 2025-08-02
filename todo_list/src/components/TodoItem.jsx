@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useEffect, useRef, useState, useContext } from 'react';
 import ItemInfo from './ItemInfo';
 import ItemActions from './ItemActions';
@@ -7,14 +8,15 @@ import TodoItemContext from '../context/TodoItemContext';
 const TodoItem = ({ model }) => {
   const inputRef = useRef(null);
   const [title, setTitle] = useState(model.title);
+  const [editMode, setEditMode] = useState(false);
   const [isHovering, setHovering] = useState(false);
   const { todoList, setTodoList } = useContext(TodoListContext);
 
   useEffect(() => {
-    if (model.editMode && inputRef.current) {
+    if (editMode && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [model.editMode, inputRef]);
+  }, [editMode, inputRef]);
 
 
   const saveItem = (obj) => {
@@ -29,18 +31,23 @@ const TodoItem = ({ model }) => {
     );
   };
 
+  const bulletClss = classNames('', { 'text-purple-400': !model.completed });
+
   return (
     <TodoItemContext.Provider value={{
       inputRef,
       isHovering,
       title,
+      editMode,
       setHovering,
       saveItem,
       deleteItem,
-      setTitle
+      setTitle,
+      setEditMode
     }}>
 
-      <li className='flex items-start p-2 border-b-1 border-gray-200'>
+      <li className='flex space-x-4 items-center p-2 cursor-pointer rounded-lg hover:bg-purple-50'>
+        <span className={bulletClss}>&bull;</span>
         <ItemInfo model={model} />
         <ItemActions model={model} />
       </li>

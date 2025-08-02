@@ -1,31 +1,41 @@
+import classNames from 'classnames';
 import { useContext } from 'react';
 import { MdEdit, MdDeleteOutline } from 'react-icons/md';
 import TodoItemContext from '../context/TodoItemContext';
 
 const ItemActions = (props) => {
   const { model } = props;
-  const { setHovering, saveItem, deleteItem, title } = useContext(TodoItemContext);
+  const { setHovering, saveItem, deleteItem, title, editMode, setTitle, setEditMode } = useContext(TodoItemContext);
 
-  const mouseEnter = () => setHovering(true);
+  const mouseEnter = () => {
+    setHovering(true);
+  };
 
-  const mouseLeave = () => setHovering(false);
+  const mouseLeave = () => {
+    setHovering(false);
+  };
+
+  const editBtnStyle = classNames('p-2 text-sm cursor-pointer', {
+    'bg-purple-600': editMode,
+    'text-purple-200': editMode,
+    'hover:text-purple-600': !editMode
+  });
 
   return <div className='inline-flex rounded-md overflow-clip border border-gray-200'>
     <button type='button'
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
-      onClick={() => saveItem({ ...model, title, editMode: !model.editMode })}
-      className={[
-        model.editMode && 'bg-purple-600',
-        model.editMode && 'text-purple-200',
-        'px-4',
-        'py-2',
-        'text-sm',
-        'cursor-pointer'].filter(Boolean).join(' ')}>
+      onClick={() => {
+        const _title = title.trim() || model.title;
+        saveItem({ ...model, title: _title });
+        setTitle(_title);
+        setEditMode(!editMode);
+      }}
+      className={editBtnStyle}>
       <MdEdit /></button>
     <button type='button'
       onClick={() => { deleteItem(model.id) }}
-      className='px-4 py-2 text-sm cursor-pointer'>
+      className='p-2 text-sm cursor-pointer hover:text-purple-600'>
       <MdDeleteOutline /></button>
   </div>;
 };
